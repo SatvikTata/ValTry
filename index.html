@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes or No Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #question {
+            font-size: 50px;
+            margin-bottom: 20px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: red;
+        }
+        .btn {
+            font-size: 100px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.6);
+            color: blue;
+        }
+        #imageContainer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        img {
+            width: 300px;
+            height: auto;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #gifContainer {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            margin-top: 20px;
+        }
+        #gifContainer img {
+            width: 400px;
+            height: auto;
+        }
+        #goBack {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #yesText {
+            font-size: 40px;
+            color: red;
+            margin-top: 20px;
+            display: none;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        #noImage {
+            position: absolute;
+            left: 0;
+            top: 10%;
+            transform: translateY(-10%);
+        }
+        #repeatImage {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-10%);
+        }
+    </style>
+</head>
+<body>
+    <div id="question">Simranpreet Kaur <hr> Will you be my Valentine ??</div>
+    <button class="btn" onclick="showImage('yes')">Yes</button>
+    <button class="btn" onclick="showImage('no')">No</button>
+    <button id="goBack" onclick="resetPage()">Go Back</button>
+    <div id="gifContainer">
+        <img id="gifImage" src="happyCat.gif" alt="Celebration GIF">
+    </div>
+    <div id="imageContainer">
+        <img id="yesImage1" src="happyCat.png" alt="Yes Response 1">
+        <img id="yesImage2" src="sivik.jpg" alt="Yes Response 2">
+        <img id="noImage" src="angrySim.jpg" alt="No Response">
+        <img id="repeatImage" src="angrySim.jpg" alt="Repeat Response">
+    </div>
+    <div id="yesText">Great! <hr> This is the only correct answer !!! <hr> So, now you are my Valentine Yayayyayayayay !!!!!!</div>
+    <audio id="celebrationMusic" src="happy-happy-happy-song.mp3"></audio>
+    <script>
+        function showImage(answer) {
+            const question = document.getElementById('question');
+            const buttons = document.querySelectorAll('.btn');
+            const goBack = document.getElementById('goBack');
+            const yesImages = [document.getElementById('yesImage1'), document.getElementById('yesImage2')];
+            const noImage = document.getElementById('noImage');
+            const repeatImage = document.getElementById('repeatImage');
+            const gifContainer = document.getElementById('gifContainer');
+            const gifImage = document.getElementById('gifImage');
+            const celebrationMusic = document.getElementById('celebrationMusic');
+            const yesText = document.getElementById('yesText');
+
+            // Hide all images first
+            yesImages.forEach(img => {
+                img.style.display = 'none';
+                img.style.opacity = '0';
+            });
+            noImage.style.display = 'none';
+            repeatImage.style.display = 'none';
+            noImage.style.opacity = '0';
+            repeatImage.style.opacity = '0';
+            gifContainer.style.opacity = '0';
+            yesText.style.display = 'none';
+            
+            if (answer === 'yes') {
+                // Hide the question and buttons
+                question.style.display = 'none';
+                buttons.forEach(button => button.style.display = 'none');
+                goBack.style.display = 'block';
+                
+                // Show GIF
+                gifContainer.style.opacity = '1';
+                
+                // Play celebration music
+                celebrationMusic.play();
+                
+                // Show Yes Images
+                yesImages.forEach(img => {
+                    img.style.display = 'block';
+                    setTimeout(() => img.style.opacity = '1', 50);
+                });
+
+                // Show Yes Text
+                yesText.style.display = 'block';
+            } else {
+                noImage.style.display = 'block';
+                setTimeout(() => noImage.style.opacity = '1', 50);
+                setTimeout(() => {
+                    question.textContent = "Wrong Answer !!! Lets Try Again !!! Will you be my Valentine ??";
+                    repeatImage.style.display = 'block';
+                    setTimeout(() => repeatImage.style.opacity = '1', 50);
+                }, 0);
+            }
+        }
+
+        function resetPage() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
